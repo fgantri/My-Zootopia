@@ -15,6 +15,7 @@ def generate_animals_data():
     output = ""
     animals_data = load_data('animals_data.json')
     for animal in animals_data:
+        output += "<li class=\"cards__item\">"
         pairs = [("Name", animal.get("name"))]
         locations = animal.get("locations")
         if locations is not None and len(locations) > 0:
@@ -25,8 +26,8 @@ def generate_animals_data():
 
         for prop, val in pairs:
             if val is not None:
-                output += f"{prop}: {val}\n"
-        output += "\n"
+                output += f"{prop}: {val}<br>"
+        output += "</li>"
     return output
 
 
