@@ -24,19 +24,21 @@ def generate_animals_data():
         if animal["characteristics"] is not None:
             pairs.append(("Diet", animal["characteristics"].get("diet")))
             pairs.append(("Type", animal["characteristics"].get("type")))
+        output += serialize_animal(pairs)
+    return output
 
-        # construct template string
-        output += "<li class=\"cards__item\">"
-        _, name = pairs[0]
-        if name is not None:
-            output += f"<div class=\"card__title\">{name}</div>"
-        for prop, val in pairs:
-            output += "<p class=\"card__text\">"
-            if val is None:
-                continue
-            output += f"<strong>{prop}:</strong> {val}<br/>"
 
-    return output + "</p></li>"
+def serialize_animal(props_list):
+    output = "<li class=\"cards__item\">"
+    _, name = props_list[0]
+    if name is not None:
+        output += f"<div class=\"card__title\">{name}</div>"
+    output += "<p class=\"card__text\"><ul>"
+    for prop, val in props_list:
+        if val is None:
+            continue
+        output += f"<li><strong>{prop}:</strong> {val}</li>"
+    return output + "</ul></p></li>"
 
 
 def load_data(file_path):
