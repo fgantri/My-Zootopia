@@ -2,8 +2,18 @@ import json
 
 
 def main():
-    animals_data = load_data('animals_data.json')
+    animals_data = generate_animals_data()
+    with open("animals_template.html", "r") as f:
+        html_template = f.read().replace(
+            "__REPLACE_ANIMALS_INFO__", animals_data)
+    with open("animals.html", "w") as f:
+        f.write(html_template)
 
+
+
+def generate_animals_data():
+    output = ""
+    animals_data = load_data('animals_data.json')
     for animal in animals_data:
         pairs = [("Name", animal.get("name"))]
         locations = animal.get("locations")
@@ -15,8 +25,9 @@ def main():
 
         for prop, val in pairs:
             if val is not None:
-                print(f"{prop}: {val}")
-        print()
+                output += f"{prop}: {val}\n"
+        output += "\n"
+    return output
 
 
 def load_data(file_path):
